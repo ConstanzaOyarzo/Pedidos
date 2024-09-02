@@ -24,6 +24,7 @@ class AplicacionConPestanas(ctk.CTk):
     def crear_pestanas(self):
         # Crear y configurar las pestanas
         self.tab1 = self.tabview.add("Ingreso Ingredientes")
+        self.tab2 = self.tabview.add("Pedido")
 
         # Pestana 1
         self.configurar_pestana1()
@@ -37,7 +38,7 @@ class AplicacionConPestanas(ctk.CTk):
         frame_treeview.pack(side="right", fill="both", expand=True, padx=10, pady=10)
         
         
-        tarjetas_frame = ctk.CTkFrame(self.tab1)
+        tarjetas_frame = ctk.CTkFrame(self.tab2)
         tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
         
@@ -57,6 +58,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_ingresar = ctk.CTkButton(frame_formulario, text="Ingresar Ingrediente")
         self.boton_ingresar.configure(command=self.ingresar_ingrediente)
         self.boton_ingresar.pack(pady=10)
+        
 
         # Botón para eliminar arriba del Treeview
         self.boton_eliminar = ctk.CTkButton(frame_treeview, text="Eliminar Ingrediente", fg_color="black", text_color="white")
