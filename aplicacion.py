@@ -26,8 +26,9 @@ class AplicacionConPestanas(ctk.CTk):
         self.tab1 = self.tabview.add("Ingreso Ingredientes")
         self.tab2 = self.tabview.add("Pedido")
 
-        # Pestana 1
+        # Pestana 1 y 2
         self.configurar_pestana1()
+        self.configurar_pestana2()
 
     def configurar_pestana1(self):
         # Dividir en dos frames
@@ -36,12 +37,6 @@ class AplicacionConPestanas(ctk.CTk):
 
         frame_treeview = ctk.CTkFrame(self.tab1)
         frame_treeview.pack(side="right", fill="both", expand=True, padx=10, pady=10)
-        
-        
-        tarjetas_frame = ctk.CTkFrame(self.tab2)
-        tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
-
-        
 
         # Formulario primer frame
         label_nombre_ingrediente = ctk.CTkLabel(frame_formulario, text="Nombre Ingrediente:")
@@ -72,6 +67,11 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.heading("Cantidad", text="Cantidad")
 
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+
+    def configurar_pestana2(self):
+        
+        tarjetas_frame = ctk.CTkFrame(self.tab2)
+        tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
     
     def ingresar_ingrediente(self):
         pass
