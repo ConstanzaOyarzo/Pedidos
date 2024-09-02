@@ -69,10 +69,41 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
 
     def configurar_pestana2(self):
+        frame_imagenes = ctk.CTkFrame(self.tab2)
+        frame_imagenes.pack(side="top", fill="both", expand=True, padx=10, pady=10)
+
+        frame_treeview2 = ctk.CTkFrame(self.tab2)
+        frame_treeview2.pack(side="bottom", fill="both", expand=True, padx=10, pady=10)
         
         tarjetas_frame = ctk.CTkFrame(self.tab2)
         tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
+
+        label_nombre_ingrediente = ctk.CTkLabel(frame_imagenes, text="Nombre Ingrediente:")
+        label_nombre_ingrediente.pack(pady=5)
+        self.entry_nombre_ingrediente = ctk.CTkEntry(frame_imagenes)
+        self.entry_nombre_ingrediente.pack(pady=5)
+
+        label_cantidad = ctk.CTkLabel(frame_imagenes, text="Cantidad:")
+        label_cantidad.pack(pady=5)
+        self.entry_cantidad = ctk.CTkEntry(frame_imagenes)
+        self.entry_cantidad.pack(pady=5)
+        
+        self.tree = ttk.Treeview(frame_treeview2, columns=("Nombre del menu", "Cantidad", "Precio unitario"), show="headings", height=8)
+
+        self.tree.heading("Nombre del menu", text="Nombre del menu")
+        self.tree.heading("Cantidad", text="Cantidad")
+        self.tree.heading("Precio unitario", text="Precio unitario")
+
+        self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+        
+        
+
+
+       
+
     
+    
+     
     def ingresar_ingrediente(self):
         pass
 
