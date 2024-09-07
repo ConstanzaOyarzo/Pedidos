@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import ttk
 import re
 from CTkMessagebox import CTkMessagebox
+from PIL import Image
 
 class AplicacionConPestanas(ctk.CTk):
     def __init__(self):
@@ -67,6 +68,10 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.heading("Cantidad", text="Cantidad")
 
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+         # Botón para generar arriba del Treeview
+        self.boton_generar = ctk.CTkButton(frame_treeview, text="Generar menú", fg_color="blue", text_color="white")
+        self.boton_generar.configure(command=self.boton_generar)
+        self.boton_generar.pack(pady=10)
 
     def configurar_pestana2(self):
         frame_imagenes = ctk.CTkFrame(self.tab2)
@@ -78,15 +83,7 @@ class AplicacionConPestanas(ctk.CTk):
         tarjetas_frame = ctk.CTkFrame(self.tab2)
         tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
-        label_nombre_ingrediente = ctk.CTkLabel(frame_imagenes, text="Nombre Ingrediente:")
-        label_nombre_ingrediente.pack(pady=5)
-        self.entry_nombre_ingrediente = ctk.CTkEntry(frame_imagenes)
-        self.entry_nombre_ingrediente.pack(pady=5)
-
-        label_cantidad = ctk.CTkLabel(frame_imagenes, text="Cantidad:")
-        label_cantidad.pack(pady=5)
-        self.entry_cantidad = ctk.CTkEntry(frame_imagenes)
-        self.entry_cantidad.pack(pady=5)
+    
         
         self.tree = ttk.Treeview(frame_treeview2, columns=("Nombre del menu", "Cantidad", "Precio unitario"), show="headings", height=8)
 
@@ -95,6 +92,10 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.heading("Precio unitario", text="Precio unitario")
 
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+
+        self.boton_generar = ctk.CTkButton(frame_treeview2, text="Generar boleta", fg_color="blue", text_color="white")
+        self.boton_generar.configure(command=self.boton_generar)
+        self.boton_generar.pack(pady=10)
         
         
 
