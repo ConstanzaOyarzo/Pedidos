@@ -2,7 +2,7 @@ import customtkinter as ctk
 from tkinter import ttk
 import re
 from CTkMessagebox import CTkMessagebox
-from PIL import Image
+from PIL import Image, ImageTk
 
 class AplicacionConPestanas(ctk.CTk):
     def __init__(self):
@@ -21,6 +21,11 @@ class AplicacionConPestanas(ctk.CTk):
         self.tabview.pack(padx=20, pady=20)
 
         self.crear_pestanas()
+    # Cargar imágenes de los menús
+        self.icono_cola = ImageTk.PhotoImage(Image.open("icono_pepsi.png").resize((64, 64)))
+        self.icono_hamburguesa = ImageTk.PhotoImage(Image.open("icono_hamburguesa.png").resize((64, 64)))
+        self.icono_hotdog = ImageTk.PhotoImage(Image.open("icono_completo.png").resize((64, 64)))
+        self.icono_papas = ImageTk.PhotoImage(Image.open("icono_papas_fritas.png").resize((64, 64)))
 
     def crear_pestanas(self):
         # Crear y configurar las pestanas
@@ -74,28 +79,47 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_generar.pack(pady=10)
 
     def configurar_pestana2(self):
+        # Frame superior para las tarjetas de menú
         frame_imagenes = ctk.CTkFrame(self.tab2)
-        frame_imagenes.pack(side="top", fill="both", expand=True, padx=10, pady=10)
+        frame_imagenes.pack(side="top", fill="x", padx=10, pady=10)
 
-        frame_treeview2 = ctk.CTkFrame(self.tab2)
-        frame_treeview2.pack(side="bottom", fill="both", expand=True, padx=10, pady=10)
-        
-        tarjetas_frame = ctk.CTkFrame(self.tab2)
-        tarjetas_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
+        # Frame inferior para mostrar el pedido y los botones
+        frame_pedido = ctk.CTkFrame(self.tab2)
+        frame_pedido.pack(side="top", fill="both", expand=True, padx=10, pady=10)
 
-    
-        
-        self.tree = ttk.Treeview(frame_treeview2, columns=("Nombre del menu", "Cantidad", "Precio unitario"), show="headings", height=8)
+        # Frame para el total y el botón de eliminar menú (arriba de la tabla)
+        frame_total_botones = ctk.CTkFrame(frame_pedido)
+        frame_total_botones.pack(side="top", fill="x", padx=10, pady=10)
 
-        self.tree.heading("Nombre del menu", text="Nombre del menu")
-        self.tree.heading("Cantidad", text="Cantidad")
-        self.tree.heading("Precio unitario", text="Precio unitario")
+        # Botón para eliminar un menú
+        self.boton_eliminar_menu = ctk.CTkButton(frame_total_botones, text="Eliminar Menú", fg_color="black", text_color="white")
+        self.boton_eliminar_menu.pack(side="right", padx=10, pady=10)
 
-        self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+        # Etiqueta para mostrar el total (alineada a la derecha)
+        self.label_total = ctk.CTkLabel(frame_total_botones, text="Total: $0.00", anchor="e")
+        self.label_total.pack(side="right", padx=10)
 
-        self.boton_generar = ctk.CTkButton(frame_treeview2, text="Generar boleta", fg_color="blue", text_color="white")
-        self.boton_generar.configure(command=self.boton_generar)
-        self.boton_generar.pack(pady=10)
+        # Treeview para mostrar el pedido
+        self.tree_pedido = ttk.Treeview(frame_pedido, columns=("Nombre del menú", "Cantidad", "Precio unitario"), show="headings", height=8)
+        self.tree_pedido.heading("Nombre del menú", text="Nombre del menú")
+        self.tree_pedido.heading("Cantidad", text="Cantidad")
+        self.tree_pedido.heading("Precio unitario", text="Precio unitario")
+        self.tree_pedido.pack(fill="both", padx=10, pady=10)
+
+        # Botón para generar la boleta (debajo de la tabla, centrado)
+        self.boton_generar_boleta = ctk.CTkButton(frame_pedido, text="Generar Boleta", fg_color="blue", text_color="white")
+        self.boton_generar_boleta.pack(side="bottom", pady=10)
+
+        # Crear tarjetas de menú con imágenes
+        self.menus = [
+            Menu("Papas Fritas", 500, self.icono_papas),
+            Menu("Completo", 1800, self.icono_hotdog),
+            Menu("Pepsi", 1100, self.icono_cola),
+            Menu("Hamburguesa", 3500, self.icono_hamburguesa)
+        ]
+
+        for menu in self.menus:
+            self.crear_tarjeta(menu, frame_imagenes)
         
         
 
