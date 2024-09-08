@@ -107,16 +107,19 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_generar_boleta.pack(side="bottom", pady=10)
 
         # Cargar imágenes de los menús
-        icono_pepsi = ImageTk.PhotoImage(Image.open("icono_pepsi.png"))
-        icono_hamburguesa = ImageTk.PhotoImage(Image.open("icono_hamburguesa.png"))
         icono_completo = ImageTk.PhotoImage(Image.open("icono_completo.png"))
+        icono_hamburguesa = ImageTk.PhotoImage(Image.open("icono_hamburguesa.png"))
         icono_papas_fritas = ImageTk.PhotoImage(Image.open("icono_papas_fritas.png"))
+        icono_pepsi = ImageTk.PhotoImage(Image.open("icono_pepsi.png"))
 
         # instancias
-        papas_fritas = Menus("Papas Fritas", 500, icono_papas_fritas)
         completo = Menus("Completo", 1800, icono_completo)
-        pepsi = Menus("Pepsi", 1100, icono_pepsi)
         hamburguesa = Menus("Hamburguesa", 3500, icono_hamburguesa)
+        papas_fritas = Menus("Papas Fritas", 500, icono_papas_fritas)
+        pepsi = Menus("Pepsi", 1100, icono_pepsi)
+
+        self.crear_tarjeta([completo, hamburguesa, papas_fritas, pepsi])
+
 
         # for menu in self.menus:
         #     self.crear_tarjeta(menu, frame_imagenes)
