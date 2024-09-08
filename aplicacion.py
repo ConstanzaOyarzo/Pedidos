@@ -3,8 +3,7 @@ from tkinter import ttk
 import re
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
-from Menus import Menu
-
+from Menus import Menus
 
 class AplicacionConPestanas(ctk.CTk):
     def __init__(self):
@@ -114,25 +113,24 @@ class AplicacionConPestanas(ctk.CTk):
 
         # Crear tarjetas de menú con imágenes
         self.menus = [
-            Menu("Papas Fritas", 500, self.icono_papas_fritas),
-            Menu("Completo", 1800, self.icono_completo),
-            Menu("Pepsi", 1100, self.icono_pepsi),
-            Menu("Hamburguesa", 3500, self.icono_hamburguesa)
+            Menus("Papas Fritas", 500, self.icono_papas_fritas),
+            Menus("Completo", 1800, self.icono_completo),
+            Menus("Pepsi", 1100, self.icono_pepsi),
+            Menus("Hamburguesa", 3500, self.icono_hamburguesa)
         ]
 
         for menu in self.menus:
             self.crear_tarjeta(menu, frame_imagenes)
-        
-        
-
-
-        self.crear_tarjeta(menu)
 
     def ingresar_ingrediente(self):
         pass
 
     def eliminar_ingrediente(self):
         pass
+    
+    # Instancia de menu
+    # menu = Menus(menu, precio, ingredientes)
+
 
 # metodo de ayuda para crear targetas con menus solicitados
     def crear_tarjeta(self, menu):
