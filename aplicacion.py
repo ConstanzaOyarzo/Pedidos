@@ -113,10 +113,10 @@ class AplicacionConPestanas(ctk.CTk):
         icono_papas_fritas = ImageTk.PhotoImage(Image.open("icono_papas_fritas.png"))
 
         # instancias
-        papas_fritas = Menus("Papas Fritas", 500, self.icono_papas_fritas)
-        completo = Menus("Completo", 1800, self.icono_completo)
-        pepsi = Menus("Pepsi", 1100, self.icono_pepsi)
-        hamburguesa = Menus("Hamburguesa", 3500, self.icono_hamburguesa)
+        papas_fritas = Menus("Papas Fritas", 500, icono_papas_fritas)
+        completo = Menus("Completo", 1800, icono_completo)
+        pepsi = Menus("Pepsi", 1100, icono_pepsi)
+        hamburguesa = Menus("Hamburguesa", 3500, icono_hamburguesa)
 
         # for menu in self.menus:
         #     self.crear_tarjeta(menu, frame_imagenes)
