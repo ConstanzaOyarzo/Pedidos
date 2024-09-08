@@ -73,7 +73,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.heading("Cantidad", text="Cantidad")
 
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
-         # Botón para generar arriba del Treeview
+        # Botón para generar arriba del Treeview
         self.boton_generar = ctk.CTkButton(frame_treeview, text="Generar menú", fg_color="blue", text_color="white")
         self.boton_generar.configure(command=self.boton_generar)
         self.boton_generar.pack(pady=10)
@@ -124,18 +124,15 @@ class AplicacionConPestanas(ctk.CTk):
         
 
 
-       
+        self.crear_tarjeta(menu)
 
-    
-    
-     
     def ingresar_ingrediente(self):
         pass
 
     def eliminar_ingrediente(self):
         pass
 
-#metodo de ayuda para crear targetas con menus solicitados
+# metodo de ayuda para crear targetas con menus solicitados
     def crear_tarjeta(self, menu):
         # Obtener el número de columnas y filas actuales
         num_tarjetas = len(self.menus_creados)
@@ -172,8 +169,8 @@ class AplicacionConPestanas(ctk.CTk):
     def tarjeta_click(self, event, menu):
             # Verificar si hay suficientes ingredientes en el stock para preparar el menú
             suficiente_stock = True
-            if self.stock.lista_ingredientes==[]:
-                suficiente_stock=False
+            if self.stock.lista_ingredientes == []:
+                suficiente_stock = False
             for ingrediente_necesario in menu.ingredientes:
                 for ingrediente_stock in self.stock.lista_ingredientes:
                     if ingrediente_necesario.nombre == ingrediente_stock.nombre:
