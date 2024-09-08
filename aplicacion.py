@@ -4,6 +4,8 @@ import re
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
 from Menus import Menus
+from Ingrediente import Ingrediente  
+
 
 class AplicacionConPestanas(ctk.CTk):
     def __init__(self):
@@ -13,6 +15,8 @@ class AplicacionConPestanas(ctk.CTk):
         self.title("Gestion de ingredientes y pedidos")
         self.geometry("1200x700")
 
+        self.load_images()  
+        self.lista_ingredientes = []
         # Iniciar ingredientes ??
 
         # self.ingredientes = Ingredientes() ???
@@ -22,6 +26,13 @@ class AplicacionConPestanas(ctk.CTk):
         self.tabview.pack(padx=20, pady=20)
 
         self.crear_pestanas()
+    def load_images(self):
+    # Cargar imágenes de los menús
+        self.icono_pepsi = ImageTk.PhotoImage(Image.open("icono_pepsi.png").resize((64, 64)))
+        self.icono_hamburguesa = ImageTk.PhotoImage(Image.open("icono_hamburguesa.png").resize((64, 64)))
+        self.icono_completo = ImageTk.PhotoImage(Image.open("icono_completo.png").resize((64, 64)))
+        self.icono_papas_fritas = ImageTk.PhotoImage(Image.open("icono_papas_fritas.png").resize((64, 64)))
+
 
     def crear_pestanas(self):
         # Crear y configurar las pestanas
@@ -75,7 +86,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_generar.pack(pady=10)
 
     def configurar_pestana2(self):
-        # Frame superior para las tarjetas de menú
+    # Frame superior para las tarjetas de menú
         frame_imagenes = ctk.CTkFrame(self.tab2)
         frame_imagenes.pack(side="top", fill="x", padx=10, pady=10)
 
@@ -106,23 +117,17 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_generar_boleta = ctk.CTkButton(frame_pedido, text="Generar Boleta", fg_color="blue", text_color="white")
         self.boton_generar_boleta.pack(side="bottom", pady=10)
 
-        # Cargar imágenes de los menús
-        icono_completo = ImageTk.PhotoImage(Image.open("icono_completo.png"))
-        icono_hamburguesa = ImageTk.PhotoImage(Image.open("icono_hamburguesa.png"))
-        icono_papas_fritas = ImageTk.PhotoImage(Image.open("icono_papas_fritas.png"))
-        icono_pepsi = ImageTk.PhotoImage(Image.open("icono_pepsi.png"))
+        # Crear tarjetas de menú con imágenes
+        self.menus = [
+            Menus("Papas Fritas", 500, self.icono_papas_fritas),
+            Menus("Completo", 1800, self.icono_completo),
+            Menus("Pepsi", 1100, self.icono_pepsi),
+            Menus("Hamburguesa", 3500, self.icono_hamburguesa)
+        ]
 
-        # instancias
-        completo = Menus("Completo", 1800, icono_completo)
-        hamburguesa = Menus("Hamburguesa", 3500, icono_hamburguesa)
-        papas_fritas = Menus("Papas Fritas", 500, icono_papas_fritas)
-        pepsi = Menus("Pepsi", 1100, icono_pepsi)
+        for menu in self.menus:
+            self.crear_tarjeta(menu, frame_imagenes)
 
-        self.crear_tarjeta([completo, hamburguesa, papas_fritas, pepsi])
-
-
-        # for menu in self.menus:
-        #     self.crear_tarjeta(menu, frame_imagenes)
 
     def ingresar_ingrediente(self):
         pass
