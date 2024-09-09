@@ -32,10 +32,10 @@ class AplicacionConPestanas(ctk.CTk):
 
     def load_images(self):
         # Cargar imágenes de los menús
-        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
-        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
-        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
-        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
+        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png"))
+        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png"))
+        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png"))
+        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png"))
 
     def crear_pestanas(self):
         # Crear y configurar las pestañas
@@ -197,10 +197,9 @@ class AplicacionConPestanas(ctk.CTk):
 
     def crear_tarjeta(self, menu, tarjetas_frame):
         num_tarjetas = len(self.menus)
-
-        for i, menu in enumerate(self.menus):
-            fila = i // 2  # 2 columnas por fila
-            columna = i % 2
+        for num_tarjetas, menu in enumerate(self.menus):
+            fila = num_tarjetas // 2
+            columna = num_tarjetas % 2
 
             tarjeta = ctk.CTkFrame(tarjetas_frame, corner_radius=10, border_width=2)
             tarjeta.grid(row=fila, column=columna, padx=10, pady=10)
@@ -212,14 +211,6 @@ class AplicacionConPestanas(ctk.CTk):
             nombre_label.pack()
 
             tarjeta.bind("<Button-1>", lambda event, m=menu: self.tarjeta_click(m))
-
-        
-
-        
-        
-        # Dentro de la función crear_tarjeta
-
-
 
     def tarjeta_click(self, menu):
         if self.stock.verificar_stock(menu):

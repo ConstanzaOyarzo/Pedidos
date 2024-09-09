@@ -1,18 +1,11 @@
 class Menus:
     def __init__(self, nombre, precio, imagen, ingredientes=None):
-        """
-        Inicializa un menú con nombre, precio, imagen y opcionalmente una lista de ingredientes.
-        
-        :param nombre: Nombre del menú (str)
-        :param precio: Precio del menú (float o int)
-        :param imagen: Imagen asociada al menú (por ejemplo, un objeto PhotoImage de Tkinter)
-        :param ingredientes: Lista de ingredientes necesarios para el menú (list of Ingrediente objects)
-        """
         self.nombre = nombre
         self.precio = precio
         self.imagen = imagen
         self.ingredientes = ingredientes if ingredientes is not None else []
 
+<<<<<<< HEAD
     def agregar_ingrediente(self, ingrediente):
 
 
@@ -24,10 +17,10 @@ class Menus:
         """
         self.ingredientes.append(ingrediente)
     
+=======
+    # def agregar_ingrediente(self, ingrediente):
+    #     self.ingredientes.append(ingrediente)
+>>>>>>> 2fa6c08071a02ec14cb481d3f0a4905c320338f7
 
     def __str__(self):
-        """
-        Retorna la representación en cadena del menú, mostrando el nombre, precio e ingredientes.
-        """
-        ingredientes_str = ", ".join([i.nombre for i in self.ingredientes]) if self.ingredientes else "Sin ingredientes"
-        return f"Menú: {self.nombre}, Precio: {self.precio}, Ingredientes: {ingredientes_str}"
+        return f"M{self.nombre}, {self.precio}, {self.imagen}"
