@@ -180,18 +180,23 @@ class AplicacionConPestanas(ctk.CTk):
         CTkMessagebox(title="Boleta Generada", message=f"Total del pedido: ${total:.2f}", icon="info")
 
     def crear_tarjeta(self, menu, tarjetas_frame):
-        num_tarjetas = len(self.menus)
-        fila = num_tarjetas // 2
-        columna = num_tarjetas % 2
 
-        tarjeta = ctk.CTkFrame(tarjetas_frame, corner_radius=10, border_width=2)
-        tarjeta.grid(row=fila, column=columna, padx=10, pady=10)
+        for i, menu in enumerate(self.menus):
+            fila = i // 2
+            columna = i % 2
 
-        imagen_label = ctk.CTkLabel(tarjeta, image=menu.imagen, text="")
-        imagen_label.pack()
+            # num_tarjetas = len(self.menus)
+            # fila = num_tarjetas // 2
+            # columna = num_tarjetas % 2
 
-        nombre_label = ctk.CTkLabel(tarjeta, text=menu.nombre)
-        nombre_label.pack()
+            tarjeta = ctk.CTkFrame(tarjetas_frame, corner_radius=10, border_width=2)
+            tarjeta.grid(row=fila, column=columna, padx=10, pady=10)
+
+            imagen_label = ctk.CTkLabel(tarjeta, image=menu.imagen, text="")
+            imagen_label.pack()
+
+            nombre_label = ctk.CTkLabel(tarjeta, text=menu.nombre)
+            nombre_label.pack()
 
         
 
