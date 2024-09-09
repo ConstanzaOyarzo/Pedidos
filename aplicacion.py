@@ -31,10 +31,10 @@ class AplicacionConPestanas(ctk.CTk):
 
     def load_images(self):
         # Cargar imágenes de los menús
-        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png").resize((64, 64)))
-        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png").resize((64, 64)))
-        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png").resize((64, 64)))
-        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png").resize((64, 64)))
+        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png"))
+        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png"))
+        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png"))
+        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png"))
 
     def crear_pestanas(self):
         # Crear y configurar las pestañas
