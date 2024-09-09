@@ -154,11 +154,21 @@ class AplicacionConPestanas(ctk.CTk):
         CTkMessagebox(title="Generar Menú", message="Menú generado en base a los ingredientes ingresados.", icon="info")
 
     def actualizar_treeview_pedido(self):
+    #Actualiza el Treeview con la lista de menús del pedido.
+    
+    # Limpiar el Treeview actual
         for row in self.tree_pedido.get_children():
             self.tree_pedido.delete(row)
 
-        for menu in self.pedido.menus:
-            self.tree_pedido.insert("", "end", values=(menu.nombre, menu.cantidad, menu.precio))
+        # Insertar los menús actualizados en el Treeview
+        for item in self.pedido.menus:
+            menu = item['menu']  # Objeto Menus
+            cantidad = item['cantidad']  # Cantidad
+            precio_unitario = menu.precio  # Precio unitario del menú
+
+            # Insertar los valores en el Treeview
+            self.tree_pedido.insert("", "end", values=(menu.nombre, cantidad, f"${precio_unitario:.2f}"))
+
 
     def eliminar_menu(self):
         seleccion = self.tree_pedido.selection()
@@ -197,6 +207,8 @@ class AplicacionConPestanas(ctk.CTk):
 
             nombre_label = ctk.CTkLabel(tarjeta, text=menu.nombre)
             nombre_label.pack()
+
+            tarjeta.bind("<Button-1>", lambda event, m=menu: self.tarjeta_click(m))
 
         
 
