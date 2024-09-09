@@ -121,11 +121,21 @@ class AplicacionConPestanas(ctk.CTk):
 
         # Crear tarjetas de menú con imágenes
         self.menus = [
-            Menus("Papas Fritas", 500, self.icono_papas_fritas),
-            Menus("Completo", 1800, self.icono_completo),
-            Menus("Pepsi", 1100, self.icono_pepsi),
-            Menus("Hamburguesa", 3500, self.icono_hamburguesa)
-        ]
+        Menus("Papas Fritas", 500, self.icono_papas_fritas, {"papas": 5}),
+        Menus("Completo", 1800, self.icono_completo, {
+            "vienesa": 1,
+            "pan completo": 1,
+            "tomate": 1,
+            "palta": 1
+        }),
+        Menus("Pepsi", 1100, self.icono_pepsi, {"bebida": 1}),
+        Menus("Hamburguesa", 3500, self.icono_hamburguesa, {
+            "pan hamburguesa": 1,
+            "queso": 1,
+            "churrasco de carne": 1
+        })
+    ]
+
 
         for menu in self.menus:
             self.crear_tarjeta(menu, frame_imagenes)
@@ -208,6 +218,9 @@ class AplicacionConPestanas(ctk.CTk):
 
         pdf.set_font("Arial", size=12)
         pdf.cell(200, 10, "Razón Social del Negocio", ln=True, align='L')
+        pdf.cell(200, 10, "RUT: 12.345.678-9", ln=True, align='L')  # Agregar RUT
+        pdf.cell(200, 10, "Dirección: Calle Falsa 123, Ciudad", ln=True, align='L')  # Agregar Dirección
+        pdf.cell(200, 10, "Teléfono: +56 9 1234 5678", ln=True, align='L')  # Agregar Teléfono
         pdf.cell(200, 10, f"Fecha: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", ln=True, align='L')
         pdf.ln(10)
 
@@ -265,6 +278,7 @@ class AplicacionConPestanas(ctk.CTk):
     def tarjeta_click(self, menu):
         if self.stock.verificar_stock(menu):
             self.pedido.agregar_menu(menu)
+            self.stock.reducir_stock(menu)  
             self.actualizar_treeview_pedido()
 
             total = self.pedido.calcular_total()

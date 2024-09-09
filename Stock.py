@@ -3,7 +3,18 @@ class Stock:
         """
         Inicializa el stock vacío.
         """
-        self.ingredientes = {}  # Diccionario para almacenar los ingredientes y sus cantidades
+        self.ingredientes = {
+            "papas": 0,
+            "bebida": 0,
+            "vienesa": 0,
+            "pan completo": 0,
+            "tomate": 0,
+            "palta": 0,
+            "pan hamburguesa": 0,
+            "queso": 0,
+            "churrasco de carne": 0
+        }
+  # Diccionario para almacenar los ingredientes y sus cantidades
 
     def agregar_ingrediente(self, nombre, cantidad):
         """

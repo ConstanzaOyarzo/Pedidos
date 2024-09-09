@@ -11,7 +11,7 @@ class Menus:
         self.nombre = nombre
         self.precio = precio
         self.imagen = imagen
-        self.ingredientes = ingredientes if ingredientes is not None else []
+        self.ingredientes = ingredientes 
 
     def agregar_ingrediente(self, ingrediente):
         """
