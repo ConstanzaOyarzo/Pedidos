@@ -190,12 +190,8 @@ class AplicacionConPestanas(ctk.CTk):
         CTkMessagebox(title="Boleta Generada", message=f"Total del pedido: ${total:.2f}", icon="info")
 
     def crear_tarjeta(self, menu, tarjetas_frame):
-
-        for menu in self.menus:
-            # fila = i // 2
-            # columna = i % 2
-
-            num_tarjetas = len(self.menus)
+        num_tarjetas = len(self.menus)
+        for num_tarjetas, menu in enumerate(self.menus):
             fila = num_tarjetas // 2
             columna = num_tarjetas % 2
 
@@ -209,14 +205,6 @@ class AplicacionConPestanas(ctk.CTk):
             nombre_label.pack()
 
             tarjeta.bind("<Button-1>", lambda event, m=menu: self.tarjeta_click(m))
-
-        
-
-        
-        
-        # Dentro de la función crear_tarjeta
-
-
 
     def tarjeta_click(self, menu):
         if self.stock.verificar_stock(menu):
