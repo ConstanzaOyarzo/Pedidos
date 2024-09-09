@@ -6,7 +6,11 @@ from PIL import Image, ImageTk
 from Menus import Menus
 from Ingrediente import Ingrediente
 from Pedido import Pedido
-from Stock import Stock  # Asumiendo que tienes esta clase
+from Stock import Stock  
+from fpdf import FPDF
+import os
+from datetime import datetime
+# Asumiendo que tienes esta clase
 
 
 class AplicacionConPestanas(ctk.CTk):
@@ -20,6 +24,7 @@ class AplicacionConPestanas(ctk.CTk):
         # Inicializar stock y pedido
         self.stock = Stock()  # Inicializar la clase que maneja los ingredientes
         self.pedido = Pedido()  # Inicializar la clase que maneja el pedido
+        
 
         self.load_images()
         
@@ -31,10 +36,10 @@ class AplicacionConPestanas(ctk.CTk):
 
     def load_images(self):
         # Cargar imágenes de los menús
-        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png").resize((64, 64)))
-        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png").resize((64, 64)))
-        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png").resize((64, 64)))
-        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png").resize((64, 64)))
+        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png"), size=(64, 64))
+        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png"), size=(64, 64))
+        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png"), size=(64, 64))
+        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png"), size=(64, 64))
 
     def crear_pestanas(self):
         # Crear y configurar las pestañas
@@ -186,8 +191,58 @@ class AplicacionConPestanas(ctk.CTk):
         self.label_total.configure(text=f"Total: ${total:.2f}")
 
     def generar_boleta(self):
+        """
+        Genera la boleta en formato PDF usando los detalles del pedido.
+        """
+        detalles_pedido = self.pedido.obtener_detalles()
         total = self.pedido.calcular_total()
-        CTkMessagebox(title="Boleta Generada", message=f"Total del pedido: ${total:.2f}", icon="info")
+        iva = total * 0.19
+        total_final = total + iva
+
+        # Crear el PDF (como en el ejemplo anterior)
+        pdf = FPDF()
+        pdf.add_page()
+
+        pdf.set_font("Arial", 'B', 16)
+        pdf.cell(200, 10, "Boleta Restaurante", ln=True, align='C')
+
+        pdf.set_font("Arial", size=12)
+        pdf.cell(200, 10, "Razón Social del Negocio", ln=True, align='L')
+        pdf.cell(200, 10, f"Fecha: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", ln=True, align='L')
+        pdf.ln(10)
+
+        # Agregar los detalles del pedido
+        pdf.set_font("Arial", 'B', 12)
+        pdf.cell(50, 10, "Nombre", 1)
+        pdf.cell(30, 10, "Cantidad", 1)
+        pdf.cell(50, 10, "Precio Unitario", 1)
+        pdf.cell(50, 10, "Subtotal", 1)
+        pdf.ln()
+
+        pdf.set_font("Arial", size=12)
+        for item in detalles_pedido:
+            nombre = item['nombre']
+            cantidad = item['cantidad']
+            precio_unitario = item['precio_unitario']
+            subtotal = cantidad * precio_unitario
+
+            pdf.cell(50, 10, nombre, 1)
+            pdf.cell(30, 10, str(cantidad), 1)
+            pdf.cell(50, 10, f"${precio_unitario:.2f}", 1)
+            pdf.cell(50, 10, f"${subtotal:.2f}", 1)
+            pdf.ln()
+
+        # Agregar los totales
+        pdf.cell(200, 10, f"Subtotal: ${total:.2f}", ln=True, align='R')
+        pdf.cell(200, 10, f"IVA (19%): ${iva:.2f}", ln=True, align='R')
+        pdf.cell(200, 10, f"Total: ${total_final:.2f}", ln=True, align='R')
+
+        # Guardar el PDF
+        pdf_file = "boleta.pdf"
+        pdf.output(pdf_file)
+
+        # Abrir el archivo PDF (en Windows)
+        os.startfile(pdf_file)
 
     def crear_tarjeta(self, menu, tarjetas_frame):
 
@@ -196,8 +251,8 @@ class AplicacionConPestanas(ctk.CTk):
             fila = num_tarjetas // 2
             columna = num_tarjetas % 2
 
-            tarjeta = ctk.CTkFrame(tarjetas_frame, corner_radius=10, border_width=2)
-            tarjeta.grid(row=fila, column=columna, padx=10, pady=10)
+            tarjeta = ctk.CTkFrame(tarjetas_frame,corner_radius=10, border_width=2)
+            tarjeta.grid(row=fila, column=columna, padx=10, pady=10,)
 
             imagen_label = ctk.CTkLabel(tarjeta, image=menu.imagen, text="")
             imagen_label.pack()
@@ -221,3 +276,4 @@ class AplicacionConPestanas(ctk.CTk):
 if __name__ == "__main__":
     app = AplicacionConPestanas()
     app.mainloop()
+

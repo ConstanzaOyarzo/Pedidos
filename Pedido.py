@@ -35,3 +35,20 @@ class Pedido:
         for item in self.menus:
             total += item['menu'].precio * item['cantidad']
         return total
+
+    def obtener_detalles(self):
+        """
+        Devuelve una lista de diccionarios con los detalles del pedido.
+        
+        :return: Lista de diccionarios con nombre, cantidad y precio unitario de cada menú.
+        """
+        detalles = []
+        for item in self.menus:
+            menu = item['menu']
+            detalles.append({
+                "nombre": menu.nombre,
+                "cantidad": item['cantidad'],
+                "precio_unitario": menu.precio
+            })
+        return detalles
+    
