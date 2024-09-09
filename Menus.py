@@ -14,12 +14,16 @@ class Menus:
         self.ingredientes = ingredientes if ingredientes is not None else []
 
     def agregar_ingrediente(self, ingrediente):
+
+
+
         """
         Agrega un ingrediente a la lista de ingredientes del menú.
         
         :param ingrediente: Objeto Ingrediente que se agrega al menú.
         """
         self.ingredientes.append(ingrediente)
+    
 
     def __str__(self):
         """

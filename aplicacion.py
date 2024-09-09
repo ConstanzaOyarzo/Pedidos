@@ -16,6 +16,7 @@ class AplicacionConPestanas(ctk.CTk):
         # Ventana principal
         self.title("Gestion de ingredientes y pedidos")
         self.geometry("1200x700")
+        
 
         # Inicializar stock y pedido
         self.stock = Stock()  # Inicializar la clase que maneja los ingredientes
@@ -31,10 +32,10 @@ class AplicacionConPestanas(ctk.CTk):
 
     def load_images(self):
         # Cargar imágenes de los menús
-        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png").resize((64, 64)))
-        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png").resize((64, 64)))
-        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png").resize((64, 64)))
-        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png").resize((64, 64)))
+        self.icono_pepsi = ctk.CTkImage(Image.open("icono_pepsi.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
+        self.icono_hamburguesa = ctk.CTkImage(Image.open("icono_hamburguesa.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
+        self.icono_completo = ctk.CTkImage(Image.open("icono_completo.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
+        self.icono_papas_fritas = ctk.CTkImage(Image.open("icono_papas_fritas.png").resize((64, 64)))  # Cambia (64, 64) por el tamaño deseado
 
     def crear_pestanas(self):
         # Crear y configurar las pestañas
@@ -86,6 +87,7 @@ class AplicacionConPestanas(ctk.CTk):
         # Frame superior para las tarjetas de menú
         frame_imagenes = ctk.CTkFrame(self.tab2)
         frame_imagenes.pack(side="top", fill="x", padx=10, pady=10)
+        
 
         # Frame inferior para mostrar el pedido y los botones
         frame_pedido = ctk.CTkFrame(self.tab2)
@@ -110,6 +112,8 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree_pedido.heading("Precio unitario", text="Precio unitario")
         self.tree_pedido.pack(fill="both", padx=10, pady=10)
 
+        
+
         # Botón para generar boleta
         self.boton_generar_boleta = ctk.CTkButton(frame_pedido, text="Generar Boleta", fg_color="blue", text_color="white", command=self.generar_boleta)
         self.boton_generar_boleta.pack(side="bottom", pady=10)
@@ -123,7 +127,9 @@ class AplicacionConPestanas(ctk.CTk):
         ]
 
         for menu in self.menus:
-            self.crear_tarjeta(menu, frame_imagenes)
+                self.crear_tarjeta(menu, frame_imagenes)
+
+            
 
     def ingresar_ingrediente(self):
         nombre = self.entry_nombre_ingrediente.get()
@@ -190,14 +196,11 @@ class AplicacionConPestanas(ctk.CTk):
         CTkMessagebox(title="Boleta Generada", message=f"Total del pedido: ${total:.2f}", icon="info")
 
     def crear_tarjeta(self, menu, tarjetas_frame):
+        num_tarjetas = len(self.menus)
 
-        for menu in self.menus:
-            # fila = i // 2
-            # columna = i % 2
-
-            num_tarjetas = len(self.menus)
-            fila = num_tarjetas // 2
-            columna = num_tarjetas % 2
+        for i, menu in enumerate(self.menus):
+            fila = i // 2  # 2 columnas por fila
+            columna = i % 2
 
             tarjeta = ctk.CTkFrame(tarjetas_frame, corner_radius=10, border_width=2)
             tarjeta.grid(row=fila, column=columna, padx=10, pady=10)
