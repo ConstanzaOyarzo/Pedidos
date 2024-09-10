@@ -271,6 +271,10 @@ class AplicacionConPestanas(ctk.CTk):
 
             tarjeta.bind("<Button-1>", lambda event, m=menu: self.tarjeta_click(m))
 
+            # Cambiar el color del borde cuando el mouse pasa sobre la tarjeta
+            tarjeta.bind("<Enter>", lambda event: tarjeta.configure(border_color="#FF0000"))  # Cambia a rojo al pasar el mouse
+            tarjeta.bind("<Leave>", lambda event: tarjeta.configure(border_color="#4CAF50"))  # Vuelve al verde al salir
+
     def tarjeta_click(self, menu):
         self.pedido.agregar_menu(menu)
         # self.stock.reducir_stock(menu)  
