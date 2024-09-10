@@ -10,7 +10,6 @@ from Stock import Stock
 from fpdf import FPDF
 import os
 from datetime import datetime
-# Asumiendo que tienes esta clase
 
 
 class AplicacionConPestanas(ctk.CTk):
@@ -74,7 +73,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.boton_ingresar.pack(pady=10)
 
         # Botón para eliminar arriba del Treeview
-        self.boton_eliminar = ctk.CTkButton(frame_treeview, text="Eliminar Ingrediente", fg_color="black", text_color="white", command=self.eliminar_ingrediente)
+        self.boton_eliminar = ctk.CTkButton(frame_treeview, text="Eliminar Ingrediente", command=self.eliminar_ingrediente)
         self.boton_eliminar.pack(pady=10)
 
         # Treeview en el segundo frame
@@ -84,7 +83,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree.pack(expand=True, fill="both", padx=10, pady=10)
 
         # Botón para generar menú
-        self.boton_generar = ctk.CTkButton(frame_treeview, text="Generar menú", fg_color="blue", text_color="white", command=self.boton_generar)
+        self.boton_generar = ctk.CTkButton(frame_treeview, text="Generar menú", command=self.boton_generar)
         self.boton_generar.pack(pady=10)
 
     def configurar_pestana2(self):
@@ -101,7 +100,7 @@ class AplicacionConPestanas(ctk.CTk):
         frame_total_botones.pack(side="top", fill="x", padx=10, pady=10)
 
         # Botón para eliminar un menú
-        self.boton_eliminar_menu = ctk.CTkButton(frame_total_botones, text="Eliminar Menú", fg_color="black", text_color="white", command=self.eliminar_menu)
+        self.boton_eliminar_menu = ctk.CTkButton(frame_total_botones, text="Eliminar Menú", command=self.eliminar_menu)
         self.boton_eliminar_menu.pack(side="right", padx=10, pady=10)
 
         # Etiqueta para mostrar el total
@@ -116,7 +115,7 @@ class AplicacionConPestanas(ctk.CTk):
         self.tree_pedido.pack(fill="both", padx=10, pady=10)
 
         # Botón para generar boleta
-        self.boton_generar_boleta = ctk.CTkButton(frame_pedido, text="Generar Boleta", fg_color="blue", text_color="white", command=self.generar_boleta)
+        self.boton_generar_boleta = ctk.CTkButton(frame_pedido, text="Generar Boleta", command=self.generar_boleta)
         self.boton_generar_boleta.pack(side="bottom", pady=10)
 
         # Crear tarjetas de menú con imágenes
@@ -135,7 +134,6 @@ class AplicacionConPestanas(ctk.CTk):
             "churrasco de carne": 1
         })
     ]
-
 
         for menu in self.menus:
             self.crear_tarjeta(menu, frame_imagenes)
@@ -177,9 +175,9 @@ class AplicacionConPestanas(ctk.CTk):
 
         # Insertar los menús actualizados en el Treeview
         for item in self.pedido.menus:
-            menu = item['menu']  # Objeto Menus
-            cantidad = item['cantidad']  # Cantidad
-            precio_unitario = menu.precio  # Precio unitario del menú
+            menu = item['menu']
+            cantidad = item['cantidad']
+            precio_unitario = menu.precio
 
             # Insertar los valores en el Treeview
             self.tree_pedido.insert("", "end", values=(menu.nombre, cantidad, f"${precio_unitario:.2f}"))
@@ -201,15 +199,13 @@ class AplicacionConPestanas(ctk.CTk):
         self.label_total.configure(text=f"Total: ${total:.2f}")
 
     def generar_boleta(self):
-        """
-        Genera la boleta en formato PDF usando los detalles del pedido.
-        """
+        # Genera la boleta en formato PDF usando los detalles del pedido.
         detalles_pedido = self.pedido.obtener_detalles()
         total = self.pedido.calcular_total()
         iva = total * 0.19
         total_final = total + iva
 
-        # Crear el PDF (como en el ejemplo anterior)
+        # Crear PDF
         pdf = FPDF()
         pdf.add_page()
 
@@ -218,9 +214,9 @@ class AplicacionConPestanas(ctk.CTk):
 
         pdf.set_font("Arial", size=12)
         pdf.cell(200, 10, "Razón Social del Negocio", ln=True, align='L')
-        pdf.cell(200, 10, "RUT: 12.345.678-9", ln=True, align='L')  # Agregar RUT
-        pdf.cell(200, 10, "Dirección: Calle Falsa 123, Ciudad", ln=True, align='L')  # Agregar Dirección
-        pdf.cell(200, 10, "Teléfono: +56 9 1234 5678", ln=True, align='L')  # Agregar Teléfono
+        pdf.cell(200, 10, "RUT: 12.345.678-9", ln=True, align='L')
+        pdf.cell(200, 10, "Dirección: Calle Falsa 123, Ciudad", ln=True, align='L')
+        pdf.cell(200, 10, "Teléfono: +56 9 1234 5678", ln=True, align='L')
         pdf.cell(200, 10, f"Fecha: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", ln=True, align='L')
         pdf.ln(10)
 
@@ -276,15 +272,22 @@ class AplicacionConPestanas(ctk.CTk):
             tarjeta.bind("<Button-1>", lambda event, m=menu: self.tarjeta_click(m))
 
     def tarjeta_click(self, menu):
-        if self.stock.verificar_stock(menu):
-            self.pedido.agregar_menu(menu)
-            self.stock.reducir_stock(menu)  
-            self.actualizar_treeview_pedido()
+        self.pedido.agregar_menu(menu)
+        # self.stock.reducir_stock(menu)  
+        self.actualizar_treeview_pedido()
 
-            total = self.pedido.calcular_total()
-            self.label_total.configure(text=f"Total: ${total:.2f}")
-        else:
-            CTkMessagebox(title="Stock Insuficiente", message=f"No hay suficiente stock para {menu.nombre}", icon="warning")
+        total = self.pedido.calcular_total()
+        self.label_total.configure(text=f"Total: ${total:.2f}")
+
+        # if self.stock.verificar_stock(menu):
+        #     self.pedido.agregar_menu(menu)
+        #     self.stock.reducir_stock(menu)  
+        #     self.actualizar_treeview_pedido()
+
+        #     total = self.pedido.calcular_total()
+        #     self.label_total.configure(text=f"Total: ${total:.2f}")
+        # else:
+        #     CTkMessagebox(title="Stock Insuficiente", message=f"No hay suficiente stock para {menu.nombre}", icon="warning")
 
 
 if __name__ == "__main__":
